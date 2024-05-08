@@ -1,3 +1,4 @@
-spyne
-lxml
-requests
+spyne==2.13.16
+lxml==4.6.5
+requests==2.25.1
+urllib3==1.26.5
