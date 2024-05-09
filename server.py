@@ -6,27 +6,28 @@ from service import CurrencyConverterService
 
 def simple_cors_middleware(application):
     def wrapped(environ, start_response):
-        # Check if this is an OPTIONS request
+        # Handle preflight requests (OPTIONS)
         if environ['REQUEST_METHOD'] == 'OPTIONS':
-            # Return a CORS-friendly response for preflight requests
             start_response('200 OK', [
                 ('Access-Control-Allow-Origin', '*'),
                 ('Access-Control-Allow-Methods', 'POST, GET, OPTIONS'),
-                ('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+                ('Access-Control-Allow-Headers', 'Content-Type, Authorization, soapaction')
             ])
-            return [b'']  # Return an empty body
-        
-        # Pass through for other request methods
+            return [b'']  # Empty response body for preflight checks
+
+        # Add CORS headers to other requests
         def custom_start_response(status, response_headers, exc_info=None):
             response_headers.extend([
                 ('Access-Control-Allow-Origin', '*'),
                 ('Access-Control-Allow-Methods', 'POST, GET, OPTIONS'),
-                ('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+                ('Access-Control-Allow-Headers', 'Content-Type, Authorization, soapaction')
             ])
             return start_response(status, response_headers, exc_info)
 
         return application(environ, custom_start_response)
+
     return wrapped
+
 
 # SOAP application setup
 application = Application(
