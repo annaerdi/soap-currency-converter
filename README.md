@@ -1,4 +1,25 @@
-commands used for azure deployment:
+# SOAP Currency Converter
+
+a SOAP service for converting currencies implemented in python. it fetches currencies from ECB in xml format
+
+### local usage
+
+install requirements
+```
+pip install -r requirements.txt
+```
+
+run server
+```
+python server.py
+```
+
+for an example usage of converting currency, see `client_test.py`
+```
+python client_test.py
+```
+
+### commands used for azure deployment:
 
 ```
 az webapp up --resource-group ResourceGroupName --plan AppServicePlan --name AppName --runtime PYTHON:3.8 --logs
